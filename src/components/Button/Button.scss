@@ -1,0 +1,65 @@
+@import '../../assets/styles/variables';
+
+.Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: auto;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &--dark {
+    background-color: $color-surface-dark;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-accent;
+    }
+  }
+
+  &--green {
+    background-color: $color-accent;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-accent, 8%);
+    }
+  }
+
+  &--icon-only {
+    min-width: 40px;
+    width: 40px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: $color-text-muted;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $color-surface-dark;
+    }
+  }
+
+  &__icon {
+    font-size: 16px;
+  }
+
+  &__label {
+    line-height: 1.2;
+  }
+}

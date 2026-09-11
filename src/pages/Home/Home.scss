@@ -1,0 +1,101 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__overlay {
+    @include absolute-fill;
+    background-color: rgba($main-midnight, 0.7);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    max-width: 580px;
+  }
+
+  &__avatar-wrapper {
+    position: relative;
+    width: 163px;
+    height: 163px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  &__avatar {
+    width: 163px;
+    height: 163px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $color-white;
+  }
+
+  &__name {
+    color: $color-white;
+    font-size: 45px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: 0;
+    vertical-align: middle;
+    margin: 0 0 10px;
+  }
+
+  &__subtitle {
+    color: $color-white;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+    vertical-align: middle;
+    margin: 0 0 10px;
+  }
+
+  &__description {
+    color: $color-white;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 0 10px;
+  }
+
+  &__cta.Button {
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  @include mobile {
+  &__content {
+    padding: 24px;
+  }
+
+  &__avatar-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  &__name {
+    font-size: 28px;
+  }
+}
+}

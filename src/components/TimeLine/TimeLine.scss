@@ -1,0 +1,107 @@
+@import '../../assets/styles/variables';
+
+// The card's inner padding. The date and the notch are both offset by it so all three —
+// year, card title and notch — share a centre line.
+$card-padding: 15px;
+
+// Vertical gap between cards.
+$list-gap: 10px;
+
+// The year column, and the rail that runs down the middle of it.
+$date-width: 37px;
+$rail-width: 5px;
+$card-gutter: 26px;
+
+.timeline {
+  min-height: 30vh;
+  max-height: 80vh;
+  height: auto;
+  overflow-y: auto;
+
+  &__list {
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+    // Style guide: one continuous rail behind the whole list, rather than a segment per
+    // entry. Each date masks it with its own white background, which is what makes the
+    // clearance above and below a year identical by construction — it is the date's own
+    // padding on both sides, not two numbers that have to be kept in sync.
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: ($date-width - $rail-width) * 0.5;
+      width: $rail-width;
+      background-color: $color-accent;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: $card-gutter;
+    margin-bottom: $list-gap;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__date {
+    // Positioned, and later in tree order than the rail, so it paints over it.
+    position: relative;
+    flex-shrink: 0;
+    width: $date-width;
+    padding: $card-padding 0;
+    background-color: $color-white;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 120%;
+    color: $main-oxford-blue;
+  }
+
+  &__card {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    background-color: $color-bg-light;
+    padding: $card-padding;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    // Notch pointing left toward the year. Frame: 10x13 at 18px from the card top, which
+    // centres it on the title (15 + 9.6 = 24.6) and so on the year beside it.
+    &::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: -10px;
+      width: 0;
+      height: 0;
+      border-top: 6.5px solid transparent;
+      border-bottom: 6.5px solid transparent;
+      border-right: 10px solid $color-bg-light;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 120%;
+      color: $main-oxford-blue;
+    }
+
+    p {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 150%;
+      color: $main-oxford-blue;
+    }
+  }
+}

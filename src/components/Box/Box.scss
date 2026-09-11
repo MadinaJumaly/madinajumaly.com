@@ -1,0 +1,19 @@
+@import '../../assets/styles/variables';
+
+// Style guide `.info-box`: margin-bottom 50px, and `h2 { color #26C17E; margin-bottom
+// 40px; font: 700 25px/30px }`. The section rhythm lives here rather than in the page.
+.info-box {
+  position: relative;
+
+  // Direct children only. As a descendant selector this also caught every heading a
+  // nested component renders (Expertise's job title, Portfolio's card title), which
+  // outranks their own single-class rules and repainted them as 25px green headings.
+  > h2,
+  > h3 {
+    margin: 0 0 $section-heading-gap;
+    font-size: $section-heading-size;
+    font-weight: 700;
+    line-height: $section-heading-line-height;
+    color: $color-accent;
+  }
+}

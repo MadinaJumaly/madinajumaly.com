@@ -1,0 +1,150 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+// Widths come from the design: the expanded rail is 250px and the collapsed one 54px
+// (the 280/84 figures in the frames include the 30px menu tab that overhangs the edge).
+$panel-width: 250px;
+$panel-width-collapsed: 54px;
+
+// The icon-only rail: the panel's default view below the mobile breakpoint. It is a
+// responsive view, not a toggle state — the toggle only ever hides the panel entirely.
+@mixin panel-rail {
+  width: $panel-width-collapsed;
+
+  .panel__header {
+    // 54 - 40 avatar = 7px either side
+    padding: 20px 7px 40px;
+  }
+
+  .panel__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .panel__name,
+  .navigation a span,
+  .panel__footer .Button__label {
+    display: none;
+  }
+
+  .panel__footer {
+    padding: 24px 7px;
+  }
+
+  // Collapsed, "Go back" becomes the 40x30 green control from the design.
+  .panel__footer .Button {
+    min-width: 40px;
+    width: 40px;
+    height: 30px;
+    padding: 0;
+    border-radius: 5px;
+    background-color: $color-accent;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-accent, 8%);
+      color: $color-white;
+    }
+  }
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: $panel-width;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  background-color: $color-panel-bg;
+  transition: width 0.2s ease;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    // 20 top + 100 avatar + 10 + name, then 40 before the first nav row.
+    padding: 20px 16px 40px;
+  }
+
+  &__avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: width 0.2s ease, height 0.2s ease;
+    border: 1px solid $color-white;
+  }
+
+  &__name {
+    color: $color-white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  // Anchored to the panel's right edge, so it rides inward as the panel shrinks and
+  // ends up flush against the viewport once the panel is hidden. Same tab shape as the
+  // back-to-top control: square against the panel, 5px rounded on the outer side.
+  &__toggle.Button {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 0 5px 5px 0;
+    background-color: $color-surface-dark;
+    color: $color-white;
+    z-index: 1;
+
+    // The tab is fixed chrome, not a call to action — it stays white and dark on hover.
+    // Both Button--dark and Button--icon-only define hover states, so this has to outrank
+    // them; `.panel__toggle.Button:hover` does at 0,3,0.
+    &:hover {
+      background-color: $color-surface-dark;
+      color: $color-white;
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+
+    // Button--dark's background is the same #222935 as the panel, so at rest this reads
+    // as the plain link the design shows — while its native hover still fills the button
+    // accent green, the same affordance as the "Know more" CTA on the start page.
+    // Only the weight differs from the base button (design asks for 14px regular).
+    .Button {
+      font-weight: 400;
+    }
+
+    .Button__icon {
+      font-size: 14px;
+    }
+  }
+
+  // The toggle hides the panel outright, at every screen size — 250px on desktop and
+  // the 54px rail on mobile both collapse to nothing, leaving just the tab.
+  // Written as `.panel.panel--collapsed` (0,2,0) so it outranks the mobile-default
+  // `.panel` rule below regardless of source order.
+  &.panel--collapsed {
+    width: 0;
+
+    .panel__header,
+    nav,
+    .panel__footer {
+      display: none;
+    }
+  }
+
+  // Below the breakpoint the shown view is the icon rail rather than the full panel.
+  @include mobile {
+    @include panel-rail;
+  }
+}

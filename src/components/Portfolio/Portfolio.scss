@@ -1,0 +1,175 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+$card-width: 308px;
+$card-height: 190px;
+$card-gutter: 20px;
+
+.portfolio {
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 20px;
+    padding: 0;
+  }
+
+  &__filter:not(:last-child)::after {
+    content: '/';
+    margin-left: 6px;
+    color: $main-oxford-blue;
+  }
+
+  &__filter-button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: $main-oxford-blue;
+    cursor: pointer;
+
+    &.is-active {
+      color: $color-accent;
+      cursor: default;
+    }
+  }
+
+  // No display rule here on purpose: Isotope absolutely positions every item and sets
+  // the container height itself, so a grid/flex container would fight it.
+  &__grid {
+    position: relative;
+    padding: 0;
+  }
+
+  &__gutter-sizer {
+    width: $card-gutter;
+
+    @include mobile {
+      width: 0;
+    }
+  }
+
+  &__item {
+    width: $card-width;
+    height: $card-height;
+    margin-bottom: $card-gutter;
+
+    @include mobile {
+      width: 100%;
+    }
+  }
+
+  &__card {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+
+    &:hover,
+    &:focus-within {
+      .portfolio__overlay {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Placeholder tiles standing in for project screenshots, built from palette tokens so
+  // nothing throwaway enters _variables.scss.
+  &__media {
+    position: absolute;
+    inset: 0;
+
+    &--shamrock {
+      background: linear-gradient(135deg, $main-shamrock 0 55%, $main-oxford-blue 55% 100%);
+    }
+
+    &--oxford-blue {
+      background: linear-gradient(135deg, $main-oxford-blue 0 55%, $main-shamrock 55% 100%);
+    }
+
+    &--raven {
+      background: linear-gradient(135deg, $main-raven 0 55%, $main-gallery 55% 100%);
+    }
+
+    &--midnight {
+      background: linear-gradient(135deg, $main-midnight 0 55%, $main-shamrock 55% 100%);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 20px 15px 30px;
+    // Solid white: the card sits over a photo, so 95% lets the image bleed through and
+    // costs legibility for no visible benefit.
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    // Parked just below the card and clipped by .portfolio__card's overflow, so hovering
+    // wipes it up from the bottom edge rather than fading it in.
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    flex: 0 0 auto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: $color-accent;
+    // The design's titles are one line; real project names run to two or three, which
+    // eats the description's room in a fixed-height card. Two lines is the ceiling.
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+
+  &__description {
+    margin: 0;
+    // Takes whatever the title and link leave, so the link keeps the design's 30px
+    // clearance off the bottom edge whether the title runs one line or two.
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $main-oxford-blue;
+  }
+
+  // The clamp lives on this inner block, not on .portfolio__description: `-webkit-box`
+  // on a flex item resolves to zero height, which dropped the copy from the card
+  // entirely and let it spill over the link.
+  &__description-text {
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+  }
+
+  &__link {
+    flex: 0 0 auto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: $color-accent;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+// _variables.scss
+
+// Figma tokens
+$main-midnight: #000614;
+$main-oxford-blue: #222935;
+$main-shamrock: #26C17E;
+$main-raven: #667081;
+$main-gallery: #EEEEEE;
+$main-white: #FFFFFF;
+$main-black: #000000;
+$main-alto: #DDDDDD;
+
+// Semantic aliases — use these in components, not the raw names above.
+// If a color choice changes later, you only update it here once.
+$color-panel-bg: $main-oxford-blue;     // Panel/sidebar background
+$color-surface-dark: $main-oxford-blue; // secondary dark surfaces, default buttons
+$color-accent: $main-shamrock;             // active states, links, primary buttons
+$color-text-muted: $main-raven;         // inactive nav icons/text, secondary text
+$color-bg-light: $main-gallery;         // light section backgrounds (Title box, feedback box)
+$color-white: $main-white;
+$color-black: $main-black;
+$color-border: $main-alto;              // borders, dividers, input outlines
+$color-error: #D64545;                  // form validation error text
+
+// Breakpoint
+$breakpoint-mobile: 600px;
+
+// Inner-page section rhythm (Body/Title_1 + the 40px the design leaves under a heading).
+// Shared so a component can align itself to the heading without re-deriving the numbers.
+$section-heading-size: 25px;
+$section-heading-line-height: 1.2;
+$section-heading-gap: 40px;
+$section-heading-block: $section-heading-size * $section-heading-line-height
+  + $section-heading-gap;

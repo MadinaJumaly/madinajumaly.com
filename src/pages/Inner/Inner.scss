@@ -1,0 +1,24 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.Inner {
+  display: flex;
+}
+
+.inner__content {
+  flex: 1;
+  min-width: 0;
+  // The style guide has no page-layout file, so these come from the frame: sidebar ends
+  // at 250, content runs 280 -> 1244 in a 1280 viewport. The 30px on the left is the
+  // width of the menu tab that overhangs the sidebar, so content clears it.
+  padding: 40px 36px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  // 50px between sections, per the design — consistent across all six boundaries.
+  gap: 50px;
+
+  @include mobile {
+    padding: 24px;
+    gap: 40px;
+  }
+}

@@ -1,0 +1,43 @@
+@import '../../assets/styles/variables';
+
+.navigation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    width: 100%;
+  }
+
+  // 60px rows, butted together with no gap, exactly as the design stacks them
+  // (nav item tops step 189, 249, 309 …).
+  a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 60px;
+    padding: 0 20px;
+    color: $color-text-muted;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    // 20px + 14px + 20px = 54px, so the icon stays centred once the panel collapses
+    // to its 54px rail and the label is hidden.
+    svg {
+      width: 14px;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    &:hover,
+    &.active {
+      color: $color-accent;
+    }
+  }
+}

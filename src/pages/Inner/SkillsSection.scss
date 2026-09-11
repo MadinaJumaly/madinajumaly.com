@@ -1,0 +1,243 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+// Design measurements (all against the 964px content column).
+$bar-gap: 5px;
+$bar-padding: 5px 15px;
+$field-gap: 20px;
+$input-width: 270px;
+$control-height: 40px;
+$panel-padding: 15px;
+$scale-tick-height: 10px;
+$scale-label-gap: 7px;
+$scale-label-height: 12px * 1.2;
+$scale-label-space: $scale-label-gap + $scale-label-height;
+
+.skills {
+  position: relative;
+
+  // "Open edit" sits level with the section heading, not below it: in the design the
+  // heading and the button share a top edge (both at y=31). The offset is the heading
+  // block itself, so it tracks any change to the section rhythm.
+  &__toggle-row {
+    position: absolute;
+    top: -$section-heading-block;
+    right: 0;
+  }
+
+  // ── Add-skill panel ────────────────────────────────────────────────────────────
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $field-gap;
+    margin-bottom: 40px;
+    padding: 20px $panel-padding;
+    border: 1px solid $color-accent;
+    border-radius: 5px;
+  }
+
+  &__field {
+    display: flex;
+    align-items: flex-start;
+    gap: $field-gap;
+  }
+
+  &__label {
+    // The design's labels are plain black, not the muted body grey.
+    flex-shrink: 0;
+    padding-top: 12px;
+    font-size: 14px;
+    line-height: 1.2;
+    color: $color-black;
+  }
+
+  &__control {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__input {
+    width: $input-width;
+    height: $control-height;
+    padding: 0 10px;
+    border: 1px solid $color-text-muted;
+    border-radius: 5px;
+    font-size: 14px;
+    color: $main-oxford-blue;
+    background-color: $color-white;
+
+    &::placeholder {
+      font-size: 12px;
+      color: $color-text-muted;
+    }
+
+    &:hover {
+      border-color: $main-oxford-blue;
+    }
+
+    &:focus-visible {
+      outline: none;
+      border-color: $color-accent;
+      box-shadow: 0 0 0 1px $color-accent;
+    }
+  }
+
+  &__error {
+    font-size: 12px;
+    line-height: 1.2;
+    color: $color-error;
+  }
+
+  &__notice--error {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: $color-error;
+  }
+
+  // ── Skill bars ─────────────────────────────────────────────────────────────────
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $bar-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // The label lives inside the bar, so the bar itself is the sized element and its width
+  // stays a truthful reading of the range.
+  &__bar {
+    display: flex;
+    align-items: center;
+    padding: $bar-padding;
+    background-color: $color-accent;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  // A name too long for its bar is clipped rather than stretching it — the design shows
+  // "Laravel 2 (fra…" inside a bar still only 15% wide.
+  &__bar-label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: $color-white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // The design shows no delete control, so it stays out of the way until wanted. Hidden
+  // with opacity rather than display:none so it keeps its place in the tab order and
+  // appears when a keyboard user reaches it.
+  &__remove {
+    margin-left: auto;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0 0 10px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    line-height: 1;
+    color: $color-white;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &:focus-visible {
+      opacity: 1;
+      outline: 2px solid $color-white;
+      outline-offset: 2px;
+    }
+  }
+
+  &__bar:hover &__remove,
+  &__bar:focus-within &__remove {
+    opacity: 1;
+  }
+
+  // ── Scale ──────────────────────────────────────────────────────────────────────
+  &__scale {
+    position: relative;
+    height: $scale-tick-height;
+    margin-top: 15px;
+    // The labels hang below the baseline on absolute positioning, so they contribute no
+    // height of their own — reserve it here or they overlap the next section.
+    margin-bottom: $scale-label-space;
+    // The 1px baseline the ticks sit on.
+    border-bottom: 1px solid $color-text-muted;
+  }
+
+  &__mark {
+    position: absolute;
+    bottom: 0;
+    width: 1px;
+    height: $scale-tick-height;
+    background-color: $color-text-muted;
+  }
+
+  &__mark-label {
+    position: absolute;
+    top: calc(100% + #{$scale-label-gap});
+    font-size: 12px;
+    line-height: 1.2;
+    color: $color-text-muted;
+    white-space: nowrap;
+  }
+
+  // First and last labels align to the ends of the scale rather than overflowing it.
+  &__mark:first-child &__mark-label {
+    left: 0;
+  }
+
+  &__mark:not(:first-child):not(:last-child) &__mark-label {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__mark:last-child &__mark-label {
+    right: 0;
+  }
+
+  // ── Loading ────────────────────────────────────────────────────────────────────
+  &__overlay {
+    @include absolute-fill;
+    @include flex-center;
+    background-color: rgba($color-white, 0.7);
+
+    .icon {
+      font-size: 32px;
+      color: $color-accent;
+    }
+  }
+
+  @include mobile {
+    &__toggle-row {
+      position: static;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    &__field {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__label {
+      padding-top: 0;
+    }
+
+    &__input {
+      width: 100%;
+    }
+
+    &__control {
+      width: 100%;
+    }
+  }
+}
