@@ -4,7 +4,6 @@ import Info from '../../components/Info/Info';
 import Expertise from '../../components/Expertise/Expertise';
 import Portfolio from '../../components/Portfolio/Portfolio';
 import Address from '../../components/Address/Address';
-import SkillsSection from './SkillsSection';
 import EducationSection from './EducationSection';
 import BackToTop from './BackToTop';
 import './Inner.scss';
@@ -60,8 +59,6 @@ const Inner = () => {
         <Box id="education" title="Education" content={<EducationSection />} />
 
         <Box id="experience" title="Experience" content={<Expertise data={EXPERIENCE} />} />
-
-        <Box id="skills" title="Skills" content={<SkillsSection />} />
 
         <Box id="portfolio" title="Portfolio" content={<Portfolio />} />
 

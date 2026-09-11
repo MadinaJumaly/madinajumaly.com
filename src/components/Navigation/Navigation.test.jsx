@@ -6,7 +6,6 @@ const SECTION_LABELS = [
   'About me',
   'Education',
   'Experience',
-  'Skills',
   'Portfolio',
   'Contacts',
 ];
@@ -40,10 +39,10 @@ describe('Navigation', () => {
   });
 
   it('moves the active state to whichever section the hash names', () => {
-    const { container } = renderAt('/inner#skills');
+    const { container } = renderAt('/inner#experience');
     const active = container.querySelectorAll('a.active');
     expect(active).toHaveLength(1);
-    expect(active[0]).toHaveTextContent('Skills');
+    expect(active[0]).toHaveTextContent('Experience');
     expect(container.querySelector('a[href="#about"]')).not.toHaveClass('active');
   });
 
@@ -54,7 +53,7 @@ describe('Navigation', () => {
       'aria-current',
       'location'
     );
-    expect(screen.getByRole('link', { name: 'Skills' })).not.toHaveAttribute('aria-current');
+    expect(screen.getByRole('link', { name: 'Experience' })).not.toHaveAttribute('aria-current');
   });
 
   it('marks nothing active for a hash that matches no section', () => {

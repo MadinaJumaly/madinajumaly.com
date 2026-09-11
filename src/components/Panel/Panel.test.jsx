@@ -19,7 +19,7 @@ describe('Panel', () => {
     renderPanel();
     expect(screen.getByAltText('User avatar')).toBeInTheDocument();
     expect(screen.getByText('Madina Jumaly')).toBeInTheDocument();
-    expect(screen.getAllByRole('link')).toHaveLength(6);
+    expect(screen.getAllByRole('link')).toHaveLength(5);
     expect(screen.getByRole('button', { name: /go back/i })).toBeInTheDocument();
   });
 

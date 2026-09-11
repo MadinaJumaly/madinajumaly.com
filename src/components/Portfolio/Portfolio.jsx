@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Isotope from 'isotope-layout';
 import imagesLoaded from 'imagesloaded';
 import './Portfolio.scss';
@@ -42,7 +42,13 @@ const Portfolio = () => {
 
   // Isotope owns item positioning, so it is initialised once against the grid node and
   // never re-created when the filter changes.
-  useEffect(() => {
+  //
+  // useLayoutEffect, not useEffect: Isotope's constructor positions every item
+  // synchronously (position: absolute; left/top), but before that runs the items are
+  // plain <li>s in normal flow, which stack instead of forming a row. useEffect fires
+  // after the browser paints, so that stacked state would flash on screen for a frame;
+  // useLayoutEffect fires before paint, so the very first frame is already laid out.
+  useLayoutEffect(() => {
     const iso = new Isotope(gridRef.current, {
       itemSelector: '.portfolio__item',
       layoutMode: 'fitRows',

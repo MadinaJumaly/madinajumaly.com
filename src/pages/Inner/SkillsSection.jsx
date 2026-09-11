@@ -46,16 +46,22 @@ const SkillsSection = () => {
 
   return (
     <div className="skills">
-      <div className="skills__toggle-row">
-        <Button
-          variant="dark"
-          icon={faPenToSquare}
-          onClick={() => setIsFormOpen((prev) => !prev)}
-          ariaExpanded={isFormOpen}
-        >
-          {isFormOpen ? 'Close edit' : 'Open edit'}
-        </Button>
-      </div>
+      {/* Editing is a local-only convenience backed by each visitor's own localStorage —
+          it never changes what anyone else sees. Still, a public CV shouldn't expose an
+          edit form, so it's dev-only: import.meta.env.DEV is true here and under Vitest,
+          false in the production build Vercel serves. */}
+      {import.meta.env.DEV && (
+        <div className="skills__toggle-row">
+          <Button
+            variant="dark"
+            icon={faPenToSquare}
+            onClick={() => setIsFormOpen((prev) => !prev)}
+            ariaExpanded={isFormOpen}
+          >
+            {isFormOpen ? 'Close edit' : 'Open edit'}
+          </Button>
+        </div>
+      )}
 
       {isFormOpen && (
         <Formik
@@ -113,15 +119,17 @@ const SkillsSection = () => {
           return (
             <li key={skillId} className="skills__bar" style={{ width: `${skill.range}%` }}>
               <span className="skills__bar-label">{skill.name}</span>
-              <button
-                type="button"
-                className="skills__remove"
-                // The bar's own text is the skill name, so the control needs its own name.
-                aria-label={`Remove ${skill.name}`}
-                onClick={() => dispatch(removeSkill(skillId))}
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
+              {import.meta.env.DEV && (
+                <button
+                  type="button"
+                  className="skills__remove"
+                  // The bar's own text is the skill name, so the control needs its own name.
+                  aria-label={`Remove ${skill.name}`}
+                  onClick={() => dispatch(removeSkill(skillId))}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              )}
             </li>
           );
         })}

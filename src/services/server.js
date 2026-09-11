@@ -22,9 +22,9 @@ const COURSES = [
 ];
 
 const SKILLS = [
-  { name: 'Python', range: 90 },
-  { name: 'JavaScript', range: 80 },
-  { name: 'Django', range: 75 },
+  { name: 'JavaScript/TypeScript', range: 85 },
+  { name: 'Python', range: 80 },
+  { name: 'Django/DRF', range: 75 },
   { name: 'SQL', range: 70 },
   { name: 'Git', range: 65 },
 ];

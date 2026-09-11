@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
-import background from '../../assets/images/ba.jpg';
+import background from '../../assets/images/background.jpg';
 import './Home.scss';
 
 // Placeholder until a dedicated avatar photo asset is added.
