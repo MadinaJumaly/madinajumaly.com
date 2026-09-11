@@ -56,7 +56,13 @@ $panel-width-collapsed: 54px;
   position: sticky;
   top: 0;
   background-color: $color-panel-bg;
-  transition: width 0.2s ease;
+  // No width transition: animating width on a position:sticky element, while
+  // simultaneously flipping header/nav/footer between display:none and visible,
+  // is a known trigger for WebKit render corruption during the transition (reported
+  // as a visible glitch on iOS Safari when reopening the panel — never on close,
+  // since closing goes straight to display:none with nothing left to animate into).
+  // Snapping instantly avoids the whole class of bug; nothing here needs to animate
+  // frame-by-frame to read as responsive.
 
   &__header {
     display: flex;
