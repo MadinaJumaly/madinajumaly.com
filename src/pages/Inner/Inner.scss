@@ -18,7 +18,10 @@
   gap: 50px;
 
   @include mobile {
-    padding: 24px;
+    // Same reasoning as the desktop padding above: 30px on the left, not 24, because
+    // .panel__toggle overhangs the rail by 30px. Uniform 24px left the sticky toggle
+    // overlapping whatever text had scrolled into its fixed y:20-50px band.
+    padding: 24px 24px 24px 30px;
     gap: 40px;
   }
 }
