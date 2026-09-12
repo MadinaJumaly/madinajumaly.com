@@ -63,11 +63,6 @@
   // Plain 100vh stays as the fallback for browsers that don't understand svh yet.
   height: 100vh;
   height: 100svh;
-  // The panel's own content (header + nav + footer) is ~478px at every breakpoint and
-  // never needs more than that to fit — measured comfortably under 100svh on every
-  // realistic phone height down to 568px. It should never need to scroll on its own;
-  // this is a hard guarantee of that regardless of what's triggering it.
-  overflow: hidden;
   // Fixed, not sticky: a position:sticky element that changes its own width is a known
   // WebKit compositing hazard — it left a stale, uninvalidated render layer on screen
   // after toggling (reported as a visible glitch reopening the panel on iOS Safari;
@@ -81,6 +76,24 @@
   left: 0;
   z-index: 5;
   background-color: $color-panel-bg;
+
+  // Holds header + nav + footer — not .panel__toggle, which sits outside this wrapper
+  // as .panel's other direct child specifically so its deliberate overhang past the
+  // panel's own edge (see .panel__toggle.Button below) is never at risk of being
+  // clipped here. flex:1 fills whatever height .panel doesn't spend on anything else
+  // (nothing, in practice — the toggle is position:absolute, out of flow), so this
+  // wrapper's own height always matches .panel's, which is what makes overflow:hidden
+  // meaningful: the content (header+nav+footer) is ~478px and comfortably fits under
+  // 100svh at every realistic phone height down to 568px, so it should never need to
+  // scroll on its own — this is a hard guarantee of that regardless of what's
+  // triggering it, without touching .panel itself and clipping the toggle along with it.
+  &__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
 
   &__header {
     display: flex;

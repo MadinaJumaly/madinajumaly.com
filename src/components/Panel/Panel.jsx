@@ -26,18 +26,24 @@ const Panel = () => {
         onClick={() => setCollapsed((value) => !value)}
       />
 
-      <header className="panel__header">
-        <img className="panel__avatar" src={avatar} alt="User avatar" />
-        <strong className="panel__name">Madina Jumaly</strong>
-      </header>
+      {/* Everything that could ever need clipping (if its content outgrew the panel's
+          height) lives in here, not on .panel itself — .panel__toggle sits outside this
+          wrapper specifically so its deliberate overhang past the panel's own edge is
+          never at risk of being clipped by it. */}
+      <div className="panel__body">
+        <header className="panel__header">
+          <img className="panel__avatar" src={avatar} alt="User avatar" />
+          <strong className="panel__name">Madina Jumaly</strong>
+        </header>
 
-      <Navigation />
+        <Navigation />
 
-      <footer className="panel__footer">
-        <Button variant="dark" icon={faChevronLeft} onClick={() => navigate('/')}>
-          Go back
-        </Button>
-      </footer>
+        <footer className="panel__footer">
+          <Button variant="dark" icon={faChevronLeft} onClick={() => navigate('/')}>
+            Go back
+          </Button>
+        </footer>
+      </div>
     </aside>
   );
 };
