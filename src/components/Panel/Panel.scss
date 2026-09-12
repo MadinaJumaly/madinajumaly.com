@@ -63,6 +63,11 @@
   // Plain 100vh stays as the fallback for browsers that don't understand svh yet.
   height: 100vh;
   height: 100svh;
+  // The panel's own content (header + nav + footer) is ~478px at every breakpoint and
+  // never needs more than that to fit — measured comfortably under 100svh on every
+  // realistic phone height down to 568px. It should never need to scroll on its own;
+  // this is a hard guarantee of that regardless of what's triggering it.
+  overflow: hidden;
   // Fixed, not sticky: a position:sticky element that changes its own width is a known
   // WebKit compositing hazard — it left a stale, uninvalidated render layer on screen
   // after toggling (reported as a visible glitch reopening the panel on iOS Safari;
