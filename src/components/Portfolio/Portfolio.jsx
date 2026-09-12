@@ -21,11 +21,11 @@ const ITEMS = [
   },
   {
     id: 2,
-    title: 'Collaborative Document Editor',
+    title: 'Sira exhibition website',
     description:
-      'Thesis project: a collaborative online document editing, versioning, and publication tool.',
+      'Showcase of a exhibits for sira event.',
     category: 'ui',
-    sourceUrl: 'https://github.com/MadinaJumaly/doclayer',
+    sourceUrl: 'http://tuimedaq.com/exhibition',
   },
 ].map((item, index) => ({ ...item, colorClass: COLOR_CLASSES[index % COLOR_CLASSES.length] }));
 

@@ -19,8 +19,13 @@
     background-color: $color-surface-dark;
     color: $color-white;
 
-    &:hover {
-      background-color: $color-accent;
+    // (hover: hover) excludes touch: iOS Safari has no real "unhover" after a tap, so
+    // an unguarded :hover here would apply on tap and then stick — e.g. "Go back"
+    // turning green and staying green once tapped, with no mouse around to clear it.
+    @media (hover: hover) {
+      &:hover {
+        background-color: $color-accent;
+      }
     }
   }
 
@@ -28,8 +33,10 @@
     background-color: $color-accent;
     color: $color-white;
 
-    &:hover {
-      background-color: darken($color-accent, 8%);
+    @media (hover: hover) {
+      &:hover {
+        background-color: darken($color-accent, 8%);
+      }
     }
   }
 
@@ -41,8 +48,10 @@
     background-color: transparent;
     color: $color-text-muted;
 
-    &:hover {
-      color: $color-accent;
+    @media (hover: hover) {
+      &:hover {
+        color: $color-accent;
+      }
     }
   }
 
@@ -50,8 +59,10 @@
     opacity: 0.5;
     cursor: not-allowed;
 
-    &:hover {
-      background-color: $color-surface-dark;
+    @media (hover: hover) {
+      &:hover {
+        background-color: $color-surface-dark;
+      }
     }
   }
 

@@ -25,6 +25,13 @@ $color-error: #D64545;                  // form validation error text
 // Breakpoint
 $breakpoint-mobile: 600px;
 
+// Panel/sidebar widths. Shared here (not local to Panel.scss) because Inner.scss needs
+// them too: .panel renders position:fixed rather than as a flex sibling, so
+// .inner__content reserves its space with a matching margin-left instead of flexbox
+// sharing space with it automatically.
+$panel-width: 250px;
+$panel-width-collapsed: 54px;
+
 // Inner-page section rhythm (Body/Title_1 + the 40px the design leaves under a heading).
 // Shared so a component can align itself to the heading without re-deriving the numbers.
 $section-heading-size: 25px;

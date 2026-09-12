@@ -29,7 +29,7 @@ describe('Portfolio', () => {
   it('renders every item up front so Isotope keeps ownership of the DOM', () => {
     render(<Portfolio />);
     expect(screen.getByText('NCALayer Authentication Module')).toBeInTheDocument();
-    expect(screen.getByText('Collaborative Document Editor')).toBeInTheDocument();
+    expect(screen.getByText('Sira exhibition website')).toBeInTheDocument();
   });
 
   it('shows all items by default', () => {

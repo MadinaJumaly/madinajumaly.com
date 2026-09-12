@@ -1,10 +1,10 @@
 @import '../../assets/styles/variables';
 @import '../../assets/styles/mixins';
 
-// Widths come from the design: the expanded rail is 250px and the collapsed one 54px
-// (the 280/84 figures in the frames include the 30px menu tab that overhangs the edge).
-$panel-width: 250px;
-$panel-width-collapsed: 54px;
+// $panel-width / $panel-width-collapsed live in _variables.scss — Inner.scss needs them
+// too, to size .inner__content's margin-left to match this now-position:fixed panel.
+// (250/54: the expanded rail is 250px, the collapsed one 54px; the 280/84 figures in the
+// frames include the 30px menu tab that overhangs the edge.)
 
 // The icon-only rail: the panel's default view below the mobile breakpoint. It is a
 // responsive view, not a toggle state — the toggle only ever hides the panel entirely.
@@ -31,20 +31,15 @@ $panel-width-collapsed: 54px;
     padding: 24px 7px;
   }
 
-  // Collapsed, "Go back" becomes the 40x30 green control from the design.
+  // Collapsed, "Go back" shrinks to a 40x30 icon-only control but keeps
+  // Button--dark's own colors (oxford blue, green on hover) rather than switching
+  // to a permanently green one — it's the same button as everywhere else, just smaller.
   .panel__footer .Button {
     min-width: 40px;
     width: 40px;
     height: 30px;
     padding: 0;
     border-radius: 5px;
-    background-color: $color-accent;
-    color: $color-white;
-
-    &:hover {
-      background-color: darken($color-accent, 8%);
-      color: $color-white;
-    }
   }
 }
 
@@ -53,16 +48,19 @@ $panel-width-collapsed: 54px;
   flex-direction: column;
   width: $panel-width;
   height: 100vh;
-  position: sticky;
+  // Fixed, not sticky: a position:sticky element that changes its own width is a known
+  // WebKit compositing hazard — it left a stale, uninvalidated render layer on screen
+  // after toggling (reported as a visible glitch reopening the panel on iOS Safari;
+  // removing the width transition alone only shrank the jump enough to hide it there —
+  // it reappeared, worse, on desktop Safari's larger 250px<->0 jump). Fixed positioning
+  // takes the panel out of flow entirely, so its own resizing can't trigger this at all.
+  // .inner__content reserves the matching space itself, via margin-left, since a fixed
+  // element no longer shares space with its flex siblings automatically.
+  position: fixed;
   top: 0;
+  left: 0;
+  z-index: 5;
   background-color: $color-panel-bg;
-  // No width transition: animating width on a position:sticky element, while
-  // simultaneously flipping header/nav/footer between display:none and visible,
-  // is a known trigger for WebKit render corruption during the transition (reported
-  // as a visible glitch on iOS Safari when reopening the panel — never on close,
-  // since closing goes straight to display:none with nothing left to animate into).
-  // Snapping instantly avoids the whole class of bug; nothing here needs to animate
-  // frame-by-frame to read as responsive.
 
   &__header {
     display: flex;
@@ -123,11 +121,17 @@ $panel-width-collapsed: 54px;
     justify-content: center;
 
     // Button--dark's background is the same #222935 as the panel, so at rest this reads
-    // as the plain link the design shows — while its native hover still fills the button
-    // accent green, the same affordance as the "Know more" CTA on the start page.
-    // Only the weight differs from the base button (design asks for 14px regular).
+    // as the plain link the design shows. Unlike a real CTA, it stays that panel color on
+    // hover too — same reasoning as .panel__toggle below: this is sidebar chrome (it
+    // navigates away, it doesn't do anything on this page), not a call to action, so it
+    // shouldn't borrow the accent-green affordance real CTAs use.
     .Button {
       font-weight: 400;
+
+      &:hover {
+        background-color: $color-surface-dark;
+        color: $color-white;
+      }
     }
 
     .Button__icon {

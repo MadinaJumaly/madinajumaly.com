@@ -8,6 +8,10 @@
 .inner__content {
   flex: 1;
   min-width: 0;
+  // .panel renders position:fixed (see Panel.scss), so it no longer shares space with
+  // this flex sibling automatically — this margin-left is what actually reserves room
+  // for it, and has to track the panel's own width at each state below.
+  margin-left: $panel-width;
   // The style guide has no page-layout file, so these come from the frame: sidebar ends
   // at 250, content runs 280 -> 1244 in a 1280 viewport. The 30px on the left is the
   // width of the menu tab that overhangs the sidebar, so content clears it.
@@ -18,10 +22,18 @@
   gap: 50px;
 
   @include mobile {
+    margin-left: $panel-width-collapsed;
     // Same reasoning as the desktop padding above: 30px on the left, not 24, because
     // .panel__toggle overhangs the rail by 30px. Uniform 24px left the sticky toggle
     // overlapping whatever text had scrolled into its fixed y:20-50px band.
     padding: 24px 24px 24px 30px;
     gap: 40px;
   }
+}
+
+// The panel collapses to width:0 at every screen size (see Panel.scss); since it's
+// position:fixed, content's reserved margin-left has to collapse right along with it,
+// from either the desktop 250px or the mobile 54px rail.
+.panel--collapsed + .inner__content {
+  margin-left: 0;
 }
