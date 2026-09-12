@@ -29,7 +29,7 @@
   // Hidden rather than unmounted, so it can fade and stays out of the tab order.
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease, color 0.2s ease;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 
   &.is-visible {
     opacity: 1;
@@ -40,10 +40,8 @@
     font-size: 18px;
   }
 
-  // Hover tints the chevron, not the background — the background stays #222935.
-  &:hover {
-    color: $color-accent;
-  }
+  // Chrome, not a call to action — same reasoning as .panel__toggle and "Go back": it
+  // stays white on hover rather than borrowing the accent-green real CTAs use.
 
   &:focus-visible {
     outline: 2px solid $color-accent;
