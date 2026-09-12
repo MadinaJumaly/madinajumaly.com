@@ -47,7 +47,15 @@
   display: flex;
   flex-direction: column;
   width: $panel-width;
+  // 100vh on mobile Safari is measured against the viewport with its address bar
+  // collapsed, not the shorter one actually visible while it's showing — so with a fixed
+  // height and the footer pinned to the bottom (margin-top: auto below), "Go back" sat
+  // below the real visible area until scrolling hid the address bar and revealed it.
+  // 100dvh tracks the actual visible viewport live, address bar included; the plain
+  // 100vh above it is a fallback for browsers that don't understand dvh yet (they skip
+  // the second declaration as invalid and keep this one).
   height: 100vh;
+  height: 100dvh;
   // Fixed, not sticky: a position:sticky element that changes its own width is a known
   // WebKit compositing hazard — it left a stale, uninvalidated render layer on screen
   // after toggling (reported as a visible glitch reopening the panel on iOS Safari;
